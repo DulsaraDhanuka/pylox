@@ -1,7 +1,7 @@
 import string
 from typing import List
-from tokentype import TokenType
-from logger import Logger
+from pylox.tokentypes import TokenType
+from pylox.logger import Logger
 
 class Token(object):
     def __init__(self, tokentype: TokenType, lexeme: str, literal, line: int) -> None:

@@ -1,5 +1,5 @@
 import argparse
-from lox import Lox
+from pylox.lox import Lox
 
 parser = argparse.ArgumentParser(prog='PyLox', description='A lox interpreter written in python.')
 parser.add_argument('source', nargs='?', help='Path to the file containing the lox script', type=argparse.FileType('r'))

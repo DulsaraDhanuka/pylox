@@ -1,5 +1,5 @@
-from logger import Logger
-from scanner import scan_tokens
+from pylox.logger import Logger
+from pylox.scanner import scan_tokens
 
 class Lox():
     def __init__(self):
