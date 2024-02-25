@@ -3,6 +3,8 @@ from typing import List
 from pylox.tokentypes import TokenType
 from pylox.logger import Logger
 
+# TODO: Rewrite the scanner using classes
+
 class Token(object):
     def __init__(self, tokentype: TokenType, lexeme: str, literal, line: int) -> None:
         self.tokentype: TokenType = tokentype
@@ -25,7 +27,6 @@ def scan_tokens(source: str) -> List[Token]:
         if token is not None:
             tokens += [token]
     tokens += [Token(TokenType.EOF, "", None, line)]
-    print(*tokens, sep="\n")
     return tokens
 
 def scan_token(source: str, start: int, current: int, line: int) -> (int, int, Token):
@@ -104,7 +105,7 @@ def scan_token(source: str, start: int, current: int, line: int) -> (int, int, T
     elif is_alpha(c):
         return process_identifier(source, start, current, line)
     else:
-        Logger.error(line, "Unexpected character.")
+        Logger.error("Unexpected character.", line=line)
         return current, line, None
 
 def process_string(source: str, start: int, current: int, line: int) -> (int, int, Token):
@@ -114,7 +115,7 @@ def process_string(source: str, start: int, current: int, line: int) -> (int, in
         if source[current] == "\n": line += 1
         current += 1
     if current >= len(source):
-        Logger.error(start_line, "Unterminated string literal")
+        Logger.error("Unterminated string literal", line=start_line)
         return current, line, None
     return current+1, line, create_token(TokenType.STRING, source, start-1, current+1, line, literal=source[start:current])
 
