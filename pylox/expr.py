@@ -1,5 +1,5 @@
 from __future__ import annotations
-from pylox.scanner import Token
+from pylox.token import Token
 from abc import ABC, abstractmethod
 
 class Visitor(ABC):

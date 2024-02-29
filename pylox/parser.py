@@ -1,4 +1,4 @@
-from pylox.scanner import Token
+from pylox.token import Token
 from pylox.tokentypes import TokenType
 from pylox.expr import Expr, Binary, Unary, Literal, Grouping
 from pylox.logger import Logger
@@ -56,9 +56,9 @@ class Parser(object):
         return self.primary()
 
     def primary(self) -> Expr:
-        if self._match(TokenType.TRUE): return Literal(True)
-        if self._match(TokenType.FALSE): return Literal(False)
-        if self._match(TokenType.NIL): return Literal(None)
+        if self._match(TokenType.TRUE): self._consume(); return Literal(True)
+        if self._match(TokenType.FALSE): self._consume(); return Literal(False)
+        if self._match(TokenType.NIL): self._consume(); return Literal(None)
 
         if self._match(TokenType.STRING, TokenType.NUMBER): return Literal(self._consume().literal)
 
@@ -72,7 +72,7 @@ class Parser(object):
                 Logger.error("Expect ')' after expression.", token=tok)
                 raise ParserError()
 
-        Logger.error("Expect expression.", token=self._peek())
+        Logger.error("Expression expected.", token=self._peek())
         raise ParserError()
 
     def synchronize(self) -> None:
@@ -85,9 +85,9 @@ class Parser(object):
             self._consume()
         return
 
-    def _match(self, *types) -> bool: 
+    def _match(self, *types) -> bool:
         for _type in types:
-            if self._peek().tokentype == _type:
+            if (not self._is_at_end()) and self._peek().tokentype == _type:
                 return True
         return False
 

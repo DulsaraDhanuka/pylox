@@ -2,20 +2,9 @@ import string
 from typing import List
 from pylox.tokentypes import TokenType
 from pylox.logger import Logger
+from pylox.token import Token
 
 # TODO: Rewrite the scanner using classes
-
-class Token(object):
-    def __init__(self, tokentype: TokenType, lexeme: str, literal, line: int) -> None:
-        self.tokentype: TokenType = tokentype
-        self.lexeme: str = lexeme
-        self.literal = literal
-        self.line = line
-    
-    def __repr__(self):
-        return f"{self.tokentype} {self.lexeme} {self.literal}"
-
-
 def scan_tokens(source: str) -> List[Token]:
     tokens: List[Token] = []
     start: int = 0

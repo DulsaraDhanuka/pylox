@@ -13,10 +13,11 @@ if source is None:
         try:
             code = input('> ')
             lox.interpret(code)
-            lox.error = False
+            lox.clear_errors()
         except KeyboardInterrupt as e:
             break
 else:
     lox.interpret(source.read())
     if lox.error: exit(65)
+    if lox.runtime_error: exit(70)
 
